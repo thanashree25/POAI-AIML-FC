@@ -1,0 +1,33 @@
+facts = {
+    'a': True,
+    'b': True,
+    'c': False
+}
+
+rules = [
+    ('d', ['a', 'b']),
+    ('e', ['b', 'c']),
+    ('f', ['d', 'e'])
+]
+
+def forward_chaining(facts, rules, goal):
+    inferred = set(key for key, value in facts.items() if value)
+    new_inferred = set(inferred)
+    while new_inferred:
+        current_inferred = set()
+        for head, body in rules:
+            if head not in inferred and all(fact in inferred for fact in body):
+                current_inferred.add(head)
+        if current_inferred:
+            inferred.update(current_inferred)
+            new_inferred = current_inferred
+        else:
+            new_inferred = set()
+    return goal in inferred
+
+goal = 'f'
+
+if forward_chaining(facts, rules, goal):
+    print(f"The goal '{goal}' can be achieved.")
+else:
+    print(f"The goal '{goal}' cannot be achieved.")
