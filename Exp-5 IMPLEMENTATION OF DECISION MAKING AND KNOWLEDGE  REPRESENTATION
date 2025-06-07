@@ -1,0 +1,14 @@
+minimum(X, Y, X) :- X =< Y.
+minimum(X, Y, Y) :- X > Y.
+
+maximum(X, Y, X) :- X >= Y.
+maximum(X, Y, Y) :- X < Y.
+
+likes(mary, food).
+likes(mary, wine).
+likes(john, wine).
+likes(john, mary).
+
+likes(john, X) :- likes(mary, X).
+likes(john, Y) :- likes(Y, wine).
+likes(john, Y) :- likes(Y, Y).
